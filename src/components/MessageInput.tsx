@@ -31,7 +31,7 @@ export function MessageInput({ onSendMessage }: MessageInputProps) {
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2 p-4 glass-effect border-t">
       <Input
-        placeholder="Type a message..."
+        placeholder="Type an eggy message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         className="flex-1 bg-secondary/50 border-0 focus-visible:ring-1"

@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TypingIndicator } from "./TypingIndicator";
@@ -60,7 +59,7 @@ export function ChatArea() {
   };
   
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-screen">
       <div className="flex items-center p-4 border-b glass-effect sticky top-0 z-10 md:justify-center">
         <div className="flex items-center gap-3">
           <Avatar>
@@ -75,9 +74,8 @@ export function ChatArea() {
         </div>
       </div>
       
-      {/* Use a flex-1 container with position relative to fill the space between header and input */}
       <div className="flex-1 overflow-hidden relative">
-        <ScrollArea className="absolute inset-0 p-4">
+        <ScrollArea className="absolute inset-0 p-4 pb-16">
           <div className="space-y-4 max-w-3xl mx-auto">
             {messages.map((message) => (
               <div
@@ -117,8 +115,8 @@ export function ChatArea() {
         </ScrollArea>
       </div>
       
-      {/* Input is now outside the ScrollArea and will stay fixed at the bottom */}
-      <div className="mt-auto">
+      {/* Fixed Input at Bottom */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md p-4">
         <MessageInput onSendMessage={handleSendMessage} />
       </div>
     </div>

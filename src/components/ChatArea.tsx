@@ -75,46 +75,52 @@ export function ChatArea() {
         </div>
       </div>
       
-      <ScrollArea className="flex-1 p-4">
-        <div className="space-y-4 max-w-3xl mx-auto">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
-            >
-              {message.sender === 'ai' && (
-                <Avatar className="mr-2 mt-1 flex-shrink-0">
+      {/* Use a flex-1 container with position relative to fill the space between header and input */}
+      <div className="flex-1 overflow-hidden relative">
+        <ScrollArea className="absolute inset-0 p-4">
+          <div className="space-y-4 max-w-3xl mx-auto">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+              >
+                {message.sender === 'ai' && (
+                  <Avatar className="mr-2 mt-1 flex-shrink-0">
+                    <AvatarFallback className="bg-primary/10 text-primary">AI</AvatarFallback>
+                  </Avatar>
+                )}
+                
+                <div
+                  className={`max-w-[80%] ${
+                    message.sender === 'user' ? 'message-bubble-out' : 'message-bubble-in'
+                  }`}
+                >
+                  <p>{message.text}</p>
+                  <span className={`text-xs ${message.sender === 'user' ? 'text-primary-foreground/70' : 'text-secondary-foreground/70'} block mt-1`}>
+                    {message.time}
+                  </span>
+                </div>
+              </div>
+            ))}
+            
+            {isTyping && (
+              <div className="flex justify-start">
+                <Avatar className="mr-2 flex-shrink-0">
                   <AvatarFallback className="bg-primary/10 text-primary">AI</AvatarFallback>
                 </Avatar>
-              )}
-              
-              <div
-                className={`max-w-[80%] ${
-                  message.sender === 'user' ? 'message-bubble-out' : 'message-bubble-in'
-                }`}
-              >
-                <p>{message.text}</p>
-                <span className={`text-xs ${message.sender === 'user' ? 'text-primary-foreground/70' : 'text-secondary-foreground/70'} block mt-1`}>
-                  {message.time}
-                </span>
+                <TypingIndicator className="message-bubble-in !py-3" />
               </div>
-            </div>
-          ))}
-          
-          {isTyping && (
-            <div className="flex justify-start">
-              <Avatar className="mr-2 flex-shrink-0">
-                <AvatarFallback className="bg-primary/10 text-primary">AI</AvatarFallback>
-              </Avatar>
-              <TypingIndicator className="message-bubble-in !py-3" />
-            </div>
-          )}
-          
-          <div ref={messagesEndRef} />
-        </div>
-      </ScrollArea>
+            )}
+            
+            <div ref={messagesEndRef} />
+          </div>
+        </ScrollArea>
+      </div>
       
-      <MessageInput onSendMessage={handleSendMessage} />
+      {/* Input is now outside the ScrollArea and will stay fixed at the bottom */}
+      <div className="mt-auto">
+        <MessageInput onSendMessage={handleSendMessage} />
+      </div>
     </div>
   );
 }

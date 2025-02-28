@@ -1,5 +1,5 @@
 
-import { Menu, User } from "lucide-react";
+import { Menu, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -17,8 +17,8 @@ export function MobileHeader({ onMenuClick, onProfileClick }: MobileHeaderProps)
       
       <div className="flex items-center gap-2">
         <ThemeToggle />
-        <Button variant="ghost" size="icon" onClick={onProfileClick} aria-label="Open profile">
-          <User size={20} />
+        <Button variant="ghost" size="icon" onClick={onProfileClick} aria-label="Open settings">
+          <Settings size={20} />
         </Button>
       </div>
     </div>

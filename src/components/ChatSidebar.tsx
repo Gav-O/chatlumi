@@ -1,12 +1,10 @@
 
-import { Search, ArrowLeft } from "lucide-react";
+import { Search, ArrowLeft, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface ChatSidebarProps {
@@ -17,61 +15,49 @@ interface ChatSidebarProps {
 export function ChatSidebar({ isMobileSidebarOpen, setIsMobileSidebarOpen }: ChatSidebarProps) {
   const isMobile = useIsMobile();
   
-  // Sample conversation data
+  // Sample conversation data for AI chat
   const conversations = [
     {
       id: 1,
-      name: "Sarah Johnson",
-      avatar: "",
-      lastMessage: "That sounds perfect! See you then.",
+      name: "Project Brainstorming",
+      lastMessage: "Let's explore some ideas for your new app",
       time: "2m ago",
-      unread: 2,
-      online: true,
+      active: true,
     },
     {
       id: 2,
-      name: "Design Team",
-      avatar: "",
-      lastMessage: "Let's review the mockups tomorrow morning.",
+      name: "Code Generation",
+      lastMessage: "The React component has been optimized",
       time: "45m ago",
-      unread: 0,
-      online: true,
+      active: false,
     },
     {
       id: 3,
-      name: "John Smith",
-      avatar: "",
-      lastMessage: "I've sent you the files you requested.",
+      name: "Data Analysis Help",
+      lastMessage: "Here's how you can visualize those metrics",
       time: "2h ago",
-      unread: 0,
-      online: false,
+      active: false,
     },
     {
       id: 4,
-      name: "Emily Wilson",
-      avatar: "",
-      lastMessage: "Are we still meeting today?",
+      name: "Travel Planning",
+      lastMessage: "I've found some options for your Paris trip",
       time: "1d ago",
-      unread: 0,
-      online: false,
+      active: false,
     },
     {
       id: 5,
-      name: "Product Team",
-      avatar: "",
-      lastMessage: "We'll need to update the roadmap.",
+      name: "Design Feedback",
+      lastMessage: "The color contrast could be improved",
       time: "3d ago",
-      unread: 0,
-      online: true,
+      active: false,
     },
     {
       id: 6,
-      name: "Michael Brown",
-      avatar: "",
-      lastMessage: "Thanks for your help yesterday!",
+      name: "Learning Python",
+      lastMessage: "Let's continue with data structures",
       time: "5d ago",
-      unread: 0,
-      online: false,
+      active: false,
     },
   ];
 
@@ -94,12 +80,16 @@ export function ChatSidebar({ isMobileSidebarOpen, setIsMobileSidebarOpen }: Cha
             </Button>
           )}
           
-          <h1 className="text-lg font-semibold">Chats</h1>
+          <h1 className="text-lg font-semibold">AI Chats</h1>
           
           {!isMobile && <ThemeToggle />}
         </div>
         
         <div className="p-4">
+          <Button className="w-full gap-2 mb-4">
+            <Plus size={16} />
+            New Chat
+          </Button>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
             <Input
@@ -114,21 +104,8 @@ export function ChatSidebar({ isMobileSidebarOpen, setIsMobileSidebarOpen }: Cha
             {conversations.map((convo) => (
               <button
                 key={convo.id}
-                className="w-full p-3 rounded-lg hover:bg-accent flex items-center gap-3 animate-fade-in transition-colors duration-200"
+                className={`w-full p-3 rounded-lg hover:bg-accent flex items-center gap-3 animate-fade-in transition-colors duration-200 ${convo.active ? 'bg-accent' : ''}`}
               >
-                <div className="relative">
-                  <Avatar>
-                    <AvatarImage src={convo.avatar} />
-                    <AvatarFallback className="bg-primary/10 text-primary">
-                      {convo.name.split(' ').map(n => n[0]).join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  
-                  {convo.online && (
-                    <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2 border-background animate-pulse-status" />
-                  )}
-                </div>
-                
                 <div className="flex-1 text-left truncate">
                   <div className="flex justify-between items-center">
                     <span className="font-medium truncate">{convo.name}</span>
@@ -136,12 +113,6 @@ export function ChatSidebar({ isMobileSidebarOpen, setIsMobileSidebarOpen }: Cha
                   </div>
                   <p className="text-sm text-muted-foreground truncate">{convo.lastMessage}</p>
                 </div>
-                
-                {convo.unread > 0 && (
-                  <Badge variant="default" className="ml-auto bg-primary hover:bg-primary">
-                    {convo.unread}
-                  </Badge>
-                )}
               </button>
             ))}
           </div>
